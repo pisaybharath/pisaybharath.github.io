@@ -376,12 +376,6 @@ html:not(.js) .hero-stage,
 .stack { margin-top: 1rem; font-style: italic; color: var(--teal); }
 
 .project figure { margin: 0; }
-figcaption {
-  margin-top: 1.5rem;
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--slate);
-}
 
 /* Shared 3D stack */
 .tilt { perspective: 1200px; }
