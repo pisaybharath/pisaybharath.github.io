@@ -1,19 +1,12 @@
 # Portfolio
 
-Personal portfolio of Bharath Pisay. A static site: `index.html`, `styles.css`, `script.js` and `boot.js`, with the fonts self-hosted in `fonts/`. The hero is a real WebGL scene built with [Three.js](https://threejs.org) (MIT), bundled into `assets/hero3d.js`.
+Personal portfolio of Bharath Pisay. A static site with no build step: `index.html`, `styles.css`, `script.js` and `boot.js`, with the font self-hosted in `fonts/`.
+
+The page is laid out like a printed wall calendar. The hero is a working month grid (a leave planner): pick a first and last day, or use the arrow keys, Enter, Home/End and PageUp/PageDown.
 
 ## Preview
 
-Serve the folder with any static server, for example `python3 -m http.server`, and open it in a browser. The page also works without WebGL (it falls back to a CSS 3D grid) and respects reduced motion.
-
-## Rebuild the 3D scene
-
-The scene source is `src/hero3d.js`. The bundle in `assets/` is committed, so the site needs no build to be served. To change the scene:
-
-```
-npm install
-npm run build
-```
+Serve the folder with any static server, for example `python3 -m http.server`, and open it in a browser.
 
 ## Publish
 
@@ -21,4 +14,4 @@ The site is served by GitHub Pages from the `main` branch, root folder. There is
 
 ## Licences
 
-Bricolage Grotesque and Bodoni Moda are under the SIL Open Font License (see `fonts/`). Three.js is MIT-licensed and its notice is kept in the bundle.
+Archivo is under the SIL Open Font License (see `fonts/`).
