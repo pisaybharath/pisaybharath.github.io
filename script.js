@@ -1,170 +1,95 @@
-// Leave-date picker for the hero. No external requests, no innerHTML.
+// Page behaviour outside the 3D hero: entrances, tilt, drawn illustrations.
 (function () {
   "use strict";
 
-  var MONTHS = ["January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"];
-  var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var root = document.documentElement;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  var grid = document.getElementById("cal-grid");
-  var monthLabel = document.getElementById("cal-month");
-  var result = document.getElementById("cal-result");
-  var clearBtn = document.getElementById("cal-clear");
-  var prevBtn = document.getElementById("cal-prev");
-  var nextBtn = document.getElementById("cal-next");
-  if (!grid || !monthLabel || !result || !clearBtn || !prevBtn || !nextBtn) return;
-
-  var today = startOfDay(new Date());
-  var view = new Date(today.getFullYear(), today.getMonth(), 1);
-  var focusDate = today;
-  var start = null;
-  var end = null;
-
-  function startOfDay(d) {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  }
-  function sameDay(a, b) {
-    return !!a && !!b && a.getTime() === b.getTime();
-  }
-  function addDays(d, n) {
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
-  }
-  function isWeekend(d) {
-    return d.getDay() === 0 || d.getDay() === 6;
-  }
-  function short(d) {
-    return DAYS[d.getDay()] + " " + d.getDate() + " " + MONTHS[d.getMonth()].slice(0, 3);
-  }
-  function longLabel(d) {
-    return d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+  // Entrances: each block rises out of the page in 3D, once, as it comes into view.
+  var reveals = [].slice.call(document.querySelectorAll(".reveal"));
+  reveals.forEach(function (el) {
+    if (el.getAttribute("data-i")) el.style.setProperty("--i", el.getAttribute("data-i"));
+  });
+  if ("IntersectionObserver" in window && !reduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -4% 0px" });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("is-in"); });
   }
 
-  function workingDays(a, b) {
-    var count = 0;
-    for (var d = a; d <= b; d = addDays(d, 1)) {
-      if (!isWeekend(d)) count++;
-    }
-    return count;
-  }
-
-  function summary() {
-    if (!start) {
-      result.textContent = "No dates chosen yet.";
-      clearBtn.hidden = true;
-      return;
-    }
-    clearBtn.hidden = false;
-    if (!end) {
-      result.textContent = short(start) + " chosen. Now pick the last day.";
-      return;
-    }
-    var n = workingDays(start, end);
-    var range = sameDay(start, end) ? short(start) : short(start) + " to " + short(end);
-    if (n === 0) {
-      result.textContent = range + ": no working days.";
-    } else {
-      result.textContent = range + ": " + n + (n === 1 ? " working day." : " working days.");
-    }
-  }
-
-  function render(shouldFocus) {
-    var monthText = MONTHS[view.getMonth()] + " " + view.getFullYear();
-    // Only change the live region when the month changes, so screen readers
-    // don't re-announce it on every date click.
-    if (monthLabel.textContent !== monthText) monthLabel.textContent = monthText;
-    while (grid.firstChild) grid.removeChild(grid.firstChild);
-
-    var first = new Date(view.getFullYear(), view.getMonth(), 1);
-    var lead = (first.getDay() + 6) % 7; // Monday-first grid
-    var total = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-
-    for (var i = 0; i < lead; i++) {
-      var blank = document.createElement("span");
-      blank.className = "day is-blank";
-      blank.setAttribute("aria-hidden", "true");
-      grid.appendChild(blank);
-    }
-
-    var focusInView = focusDate.getMonth() === view.getMonth() &&
-      focusDate.getFullYear() === view.getFullYear();
-
-    for (var n = 1; n <= total; n++) {
-      var date = new Date(view.getFullYear(), view.getMonth(), n);
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "day";
-      btn.textContent = String(n);
-      btn.dataset.time = String(date.getTime());
-
-      var label = longLabel(date);
-      if (isWeekend(date)) { btn.classList.add("is-weekend"); label += ", weekend"; }
-      if (sameDay(date, today)) { btn.classList.add("is-today"); label += ", today"; }
-
-      var isEdge = sameDay(date, start) || sameDay(date, end);
-      var inRange = start && end && date > start && date < end;
-      if (isEdge) btn.classList.add("is-edge");
-      else if (inRange) btn.classList.add("in-range");
-      btn.setAttribute("aria-pressed", isEdge || inRange ? "true" : "false");
-      btn.setAttribute("aria-label", label);
-
-      var isFocusTarget = focusInView ? sameDay(date, focusDate) : n === 1;
-      btn.tabIndex = isFocusTarget ? 0 : -1;
-      if (isFocusTarget && shouldFocus) {
-        // focus after insertion below
-        btn.dataset.focus = "1";
+  // Drawn illustration: a small calendar with a highlighted range.
+  var cal = document.querySelector("[data-cal]");
+  if (cal) {
+    for (var i = 0; i < 35; i++) {
+      var cell = document.createElement("span");
+      var day = i - 2; // month starts on a Wednesday
+      if (day >= 1 && day <= 30) {
+        cell.textContent = String(day);
+        if (day === 25 || day === 27) cell.className = "edge";
+        else if (day === 26) cell.className = "range";
+        if (i % 7 > 4) cell.classList.add("off");
       }
-      grid.appendChild(btn);
+      cal.appendChild(cell);
     }
-
-    var toFocus = grid.querySelector("[data-focus]");
-    if (toFocus) { toFocus.focus(); delete toFocus.dataset.focus; }
-    summary();
   }
 
-  function choose(date) {
-    focusDate = date;
-    if (!start || (start && end)) {
-      start = date;
-      end = null;
-    } else if (date < start) {
-      end = start;
-      start = date;
-    } else {
-      end = date;
+  // Drawn illustration: towers with lit and dark windows.
+  [].slice.call(document.querySelectorAll("[data-windows]")).forEach(function (tower, t) {
+    var parts = tower.getAttribute("data-windows").split("x");
+    var cols = parseInt(parts[0], 10), rows = parseInt(parts[1], 10);
+    tower.style.setProperty("--cols", cols);
+    for (var n = 0; n < cols * rows; n++) {
+      var w = document.createElement("span");
+      if ((n * 7 + t * 5) % 4 === 0) w.className = "lit";
+      tower.appendChild(w);
     }
-    render(true);
+  });
+
+  // Tilt: panels lean toward the pointer, with smoothing.
+  if (finePointer && !reduced) {
+    [].slice.call(document.querySelectorAll("[data-tilt]")).forEach(function (el) {
+      var inner = el.querySelector(".stack3d");
+      if (!inner) return;
+      var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+      function tick() {
+        cx += (tx - cx) * 0.12;
+        cy += (ty - cy) * 0.12;
+        inner.style.setProperty("--rx", cx.toFixed(2) + "deg");
+        inner.style.setProperty("--ry", cy.toFixed(2) + "deg");
+        if (Math.abs(tx - cx) > 0.02 || Math.abs(ty - cy) > 0.02) raf = requestAnimationFrame(tick);
+        else raf = 0;
+      }
+      function go() { if (!raf) raf = requestAnimationFrame(tick); }
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        var nx = (e.clientX - r.left) / r.width - 0.5;
+        var ny = (e.clientY - r.top) / r.height - 0.5;
+        tx = -ny * 14;
+        ty = nx * 18;
+        go();
+      });
+      el.addEventListener("pointerleave", function () { tx = 0; ty = 0; go(); });
+    });
   }
 
-  function moveView(delta) {
-    view = new Date(view.getFullYear(), view.getMonth() + delta, 1);
-    focusDate = new Date(view.getFullYear(), view.getMonth(), 1);
-    render(false);
+  // Fallback hero when WebGL is unavailable: a tilted grid of day tiles in CSS 3D.
+  if (root.classList.contains("no-webgl")) {
+    var fb = document.querySelector(".hero-fallback");
+    if (fb) {
+      for (var k = 0; k < 35; k++) {
+        var tile = document.createElement("span");
+        if (k % 7 > 4) tile.className = "off";
+        tile.style.setProperty("--k", k);
+        fb.appendChild(tile);
+      }
+    }
   }
-
-  grid.addEventListener("click", function (e) {
-    var btn = e.target.closest("button.day");
-    if (!btn || !grid.contains(btn)) return;
-    var time = Number(btn.dataset.time);
-    if (!isFinite(time)) return;
-    choose(startOfDay(new Date(time)));
-  });
-
-  grid.addEventListener("keydown", function (e) {
-    var step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
-    if (step === undefined) return;
-    e.preventDefault();
-    focusDate = addDays(focusDate, step);
-    view = new Date(focusDate.getFullYear(), focusDate.getMonth(), 1);
-    render(true);
-  });
-
-  prevBtn.addEventListener("click", function () { moveView(-1); });
-  nextBtn.addEventListener("click", function () { moveView(1); });
-  clearBtn.addEventListener("click", function () {
-    start = null;
-    end = null;
-    render(false);
-  });
-
-  render(false);
 })();

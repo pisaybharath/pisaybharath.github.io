@@ -1,0 +1,12 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "description": "Portfolio of Bharath Pisay. The only build step bundles the 3D hero.",
+  "scripts": {
+    "build": "esbuild src/hero3d.js --bundle --minify --format=iife --target=es2020 --outfile=assets/hero3d.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "three": "^0.187.0"
+  }
+}
