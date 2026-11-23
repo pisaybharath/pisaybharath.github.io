@@ -242,7 +242,7 @@ import {
   }
 
   // ---------- Sizing ----------
-  var vw = 1, vh = 1;
+  var vw = 1, vh = 1, side = true;
   function resize() {
     var r = stage.getBoundingClientRect();
     vw = Math.max(1, Math.round(r.width));
@@ -250,7 +250,8 @@ import {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(vw, vh, false);
     camera.aspect = vw / vh;
-    if (vw >= 900) camera.setViewOffset(vw, vh, -vw * 0.22, 0, vw, vh);
+    side = vw >= 900 || vw / vh >= 1.45;
+    if (side) camera.setViewOffset(vw, vh, -vw * (vw >= 900 ? 0.22 : 0.3), 0, vw, vh);
     else camera.setViewOffset(vw, vh, 0, -vh * 0.08, vw, vh);
     camera.updateProjectionMatrix();
     requestFrame();
@@ -274,7 +275,7 @@ import {
   function updateCamera() {
     var e = ease(progress);
     var aspect = camera.aspect;
-    var fit = vw >= 900 ? Math.max(1.55, 2.2 / aspect) : MathUtils.clamp(1.5 / aspect, 1, 3.4);
+    var fit = vw >= 900 ? Math.max(1.55, 2.2 / aspect) : side ? Math.max(2.1, 3.2 / aspect) : MathUtils.clamp(1.5 / aspect, 1, 3.4);
     camPos.copy(ISO).lerp(TOP, e);
     camPos.x += px * 1.1 * (1 - e * 0.6);
     camPos.z += py * 0.7 * (1 - e * 0.6);

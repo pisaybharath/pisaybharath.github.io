@@ -559,6 +559,15 @@ figcaption {
 @media (max-height: 760px) and (min-width: 900px) {
   .planner-note { display: none; }
 }
+/* Short, wide windows: copy and planner stay clear of the scene and of each other. */
+@media (max-height: 720px) and (min-aspect-ratio: 29/20) {
+  .hero-copy { top: 4.5rem; }
+  .hero-copy h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); }
+  .lead { margin-top: 0.8rem; font-size: 1.05rem; }
+  .hero-links { margin-top: 1rem; }
+  .planner { bottom: 1rem; padding: 0.8rem 1rem 0.9rem; }
+  .planner h2 { display: none; }
+}
 @media (max-width: 480px) {
   .site-header nav { gap: 1rem; }
   .button { padding: 0.75rem 1.1rem; }
