@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Bharath Pisay, frontend engineer in Bangalore</title>
+  <meta name="description" content="Bharath Pisay is a frontend engineer in Bangalore. He builds web interfaces for the things people do at work and at home.">
+  <meta property="og:title" content="Bharath Pisay, frontend engineer">
+  <meta property="og:description" content="Frontend engineer in Bangalore. Leave management, residency platforms and other everyday web interfaces.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#F2F5F7">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to my work</a>
+
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Bharath Pisay, back to top">BP</a>
+    <nav aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="name">
+      <div class="hero-copy">
+        <h1 id="name">Bharath Pisay</h1>
+        <p class="lead">Frontend engineer in Bangalore. I build the screens people use to get things done at work and at home.</p>
+        <p class="hero-links">
+          <a class="button" href="mailto:pisaybharath@gmail.com">Email me</a>
+          <a class="text-link" href="https://github.com/pisaybharath" rel="noopener noreferrer">See my GitHub</a>
+        </p>
+      </div>
+
+      <section class="leave-demo" aria-labelledby="demo-title">
+        <h2 id="demo-title">Pick your leave dates</h2>
+        <p class="demo-note">A small sketch of the kind of interface I build. Choose a first and last day.</p>
+
+        <div class="cal-head">
+          <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">&lsaquo;</button>
+          <p class="cal-month" id="cal-month" aria-live="polite"></p>
+          <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">&rsaquo;</button>
+        </div>
+
+        <div class="cal-weekdays" aria-hidden="true">
+          <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+        </div>
+        <div class="cal-grid" id="cal-grid" role="group" aria-label="Days of the month"></div>
+
+        <div class="cal-summary">
+          <p id="cal-result" aria-live="polite">No dates chosen yet.</p>
+          <button type="button" class="cal-clear" id="cal-clear" hidden>Clear dates</button>
+        </div>
+      </section>
+    </section>
+
+    <section id="work" class="block" aria-labelledby="work-title">
+      <h2 id="work-title">Things I've built</h2>
+
+      <article class="work-row">
+        <h3>Leave Management module</h3>
+        <div>
+          <p>I built the Leave Management module of the HRMS at Koundinyasa Technology Services, where I work as a frontend engineer.</p>
+          <p class="stack">Frontend, part of a larger HR system</p>
+        </div>
+      </article>
+
+      <article class="work-row">
+        <h3>nivaasHub</h3>
+        <div>
+          <p>A smart residency platform for managing housing societies. I'm building it now, and the frontend is where most of my time goes.</p>
+          <p class="stack">React, Vite, JSX, CSS</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="background" class="block" aria-labelledby="background-title">
+      <h2 id="background-title">Background</h2>
+
+      <ol class="timeline">
+        <li>
+          <p class="when">April 2026 to now</p>
+          <div>
+            <h3>Associate Software Engineer, Frontend</h3>
+            <p>Koundinyasa Technology Services</p>
+          </div>
+        </li>
+        <li>
+          <p class="when">Graduated 2020</p>
+          <div>
+            <h3>B.Tech in Computer Science Engineering</h3>
+            <p>GITAM University, Bangalore</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="facts">
+        <p><strong>Day to day:</strong> JavaScript, React, Vite, HTML and CSS.</p>
+        <p><strong>Learning now:</strong> backend development, starting from JavaScript fundamentals.</p>
+        <p><strong>Languages:</strong> Telugu (native) and English.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="block contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Say hello</h2>
+      <p>Email is the quickest way to reach me.</p>
+      <p class="hero-links">
+        <a class="button" href="mailto:pisaybharath@gmail.com">pisaybharath@gmail.com</a>
+        <a class="text-link" href="https://github.com/pisaybharath" rel="noopener noreferrer">github.com/pisaybharath</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Bharath Pisay. Set in Bricolage Grotesque and Source Serif 4.</p>
+  </footer>
+</body>
+</html>
