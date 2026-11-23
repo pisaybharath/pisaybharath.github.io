@@ -11,9 +11,10 @@
   <meta property="og:description" content="Frontend engineer in Bangalore. Leave management, residency platforms and other everyday web interfaces.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pisaybharath.github.io/">
-  <meta name="theme-color" content="#071c21">
+  <meta name="theme-color" content="#060e11">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/bodoni-moda-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script src="boot.js"></script>
   <script src="assets/hero3d.js" defer></script>
@@ -39,7 +40,7 @@
         <div class="hero-fallback" aria-hidden="true"></div>
 
         <div class="hero-copy">
-          <h1>Bharath Pisay</h1>
+          <h1>Bharath <em>Pisay</em></h1>
           <p class="lead">Frontend engineer in Bangalore. I build the screens people use to get things done at work and at home.</p>
           <p class="hero-links">
             <a class="button" href="mailto:pisaybharath@gmail.com">Email me</a>
@@ -110,38 +111,34 @@
       <div class="wrap">
         <h2 id="background-title" class="section-title reveal">Background</h2>
 
-        <div class="background-grid">
-          <ol class="slabs">
-            <li class="slab tilt reveal" data-tilt>
-              <div class="stack3d">
-                <p class="when">April 2026 to now</p>
+        <div class="ledger">
+          <ol class="entries">
+            <li class="entry reveal">
+              <p class="when">April 2026 to now</p>
+              <div class="entry-body">
                 <h3>Associate Software Engineer, Frontend</h3>
                 <p>Koundinyasa Technology Services</p>
               </div>
             </li>
-            <li class="slab tilt reveal" data-tilt data-i="1">
-              <div class="stack3d">
-                <p class="when">Graduated 2020</p>
+            <li class="entry reveal" data-i="1">
+              <p class="when">Graduated 2020</p>
+              <div class="entry-body">
                 <h3>B.Tech in Computer Science Engineering</h3>
                 <p>GITAM University, Bangalore</p>
               </div>
             </li>
           </ol>
 
-          <div class="facts">
-            <div class="fact tilt reveal" data-tilt data-i="2">
-              <div class="stack3d">
-                <h3>Day to day</h3>
-                <p>JavaScript, React, Vite, HTML and CSS.</p>
-              </div>
+          <dl class="entries facts">
+            <div class="entry reveal" data-i="2">
+              <dt class="when">Day to day</dt>
+              <dd class="entry-body"><p>JavaScript, React, Vite, HTML and CSS.</p></dd>
             </div>
-            <div class="fact tilt reveal" data-tilt data-i="3">
-              <div class="stack3d">
-                <h3>Learning now</h3>
-                <p>Backend development, starting from JavaScript fundamentals.</p>
-              </div>
+            <div class="entry reveal" data-i="3">
+              <dt class="when">Learning now</dt>
+              <dd class="entry-body"><p>Backend development, starting from JavaScript fundamentals.</p></dd>
             </div>
-          </div>
+          </dl>
         </div>
       </div>
     </section>
@@ -158,7 +155,7 @@
           </div>
           <div class="contact-row reveal" data-i="1">
             <dt>Phone</dt>
-            <dd><a href="tel:+918121819099">+91 81218 19099</a></dd>
+            <dd><a href="tel:+918121819099"><span class="plus">+</span>91 81218 19099</a></dd>
           </div>
           <div class="contact-row reveal" data-i="2">
             <dt>GitHub</dt>
@@ -172,7 +169,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <p class="footer-name" aria-hidden="true">Bharath Pisay</p>
-      <p class="footer-note">&copy; 2026 Bharath Pisay. Set in Bricolage Grotesque and Source Serif 4. 3D by Three.js.</p>
+      <p class="footer-note">&copy; 2026 Bharath Pisay. Set in Bodoni Moda and Bricolage Grotesque. 3D by Three.js.</p>
     </div>
   </footer>
 </body>

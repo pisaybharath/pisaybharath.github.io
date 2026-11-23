@@ -21,4 +21,4 @@ The site is served by GitHub Pages from the `main` branch, root folder. There is
 
 ## Licences
 
-Bricolage Grotesque and Source Serif 4 are under the SIL Open Font License (see `fonts/`). Three.js is MIT-licensed and its notice is kept in the bundle.
+Bricolage Grotesque and Bodoni Moda are under the SIL Open Font License (see `fonts/`). Three.js is MIT-licensed and its notice is kept in the bundle.

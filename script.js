@@ -1,4 +1,4 @@
-// Page behaviour outside the 3D hero: entrances, tilt, drawn illustrations.
+// Page behaviour outside the 3D hero: header, entrances, tilt, drawn illustrations.
 (function () {
   "use strict";
 
@@ -6,7 +6,15 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  // Entrances: each block rises out of the page in 3D, once, as it comes into view.
+  // Header: gains a ground once the page has scrolled, so links stay readable on any section.
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var syncHeader = function () { header.classList.toggle("is-scrolled", window.scrollY > 24); };
+    window.addEventListener("scroll", syncHeader, { passive: true });
+    syncHeader();
+  }
+
+  // Entrances: each block settles into place, once, as it comes into view.
   var reveals = [].slice.call(document.querySelectorAll(".reveal"));
   reveals.forEach(function (el) {
     if (el.getAttribute("data-i")) el.style.setProperty("--i", el.getAttribute("data-i"));
@@ -72,8 +80,8 @@
         var r = el.getBoundingClientRect();
         var nx = (e.clientX - r.left) / r.width - 0.5;
         var ny = (e.clientY - r.top) / r.height - 0.5;
-        tx = -ny * 14;
-        ty = nx * 18;
+        tx = -ny * 8;
+        ty = nx * 10;
         go();
       });
       el.addEventListener("pointerleave", function () { tx = 0; ty = 0; go(); });

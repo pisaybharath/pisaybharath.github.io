@@ -42,11 +42,11 @@ import {
   var COLS = 7, ROWS = 6, PITCH = 1.2, SIZE = 1.04;
 
   var PALETTE = {
-    bg: 0x071c21, ground: 0x061519, plate: 0x0a4a53,
-    weekday: 0x14808b, weekend: 0x0d4b54, today: 0xe9f0f2,
-    inRange: 0xf6d58a, edge: 0xf3b53f
+    bg: 0x060e11, ground: 0x050c0e, plate: 0x0c262c,
+    weekday: 0x1d6670, weekend: 0x0f343b, today: 0xefe9dc,
+    inRange: 0xe8d4a2, edge: 0xd6b26a
   };
-  var INK = "#16222c", CHALK = "#f2f5f7", DIM = "#9fc1c6";
+  var INK = "#14201f", CHALK = "#f3eee3", DIM = "#8fb0b4";
 
   // ---------- Scene ----------
   var scene = new Scene();
@@ -59,9 +59,9 @@ import {
 
   var camera = new PerspectiveCamera(30, 1, 0.1, 80);
 
-  scene.add(new HemisphereLight(0xcfeff2, 0x06181c, 0.75));
+  scene.add(new HemisphereLight(0xd8ecee, 0x050f12, 0.6));
 
-  var key = new DirectionalLight(0xfff0d2, 3.1);
+  var key = new DirectionalLight(0xffe9c4, 3.3);
   key.position.set(-5.5, 10, 6.5);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
@@ -72,7 +72,7 @@ import {
   key.shadow.normalBias = 0.02;
   scene.add(key);
 
-  var rim = new DirectionalLight(0x6fd2dc, 0.9);
+  var rim = new DirectionalLight(0x7fc3cc, 0.8);
   rim.position.set(6, 4, -6);
   scene.add(rim);
 
@@ -87,7 +87,7 @@ import {
 
   var plate = new Mesh(
     new BoxGeometry(COLS * PITCH + 0.5, 0.14, ROWS * PITCH + 0.5),
-    new MeshStandardMaterial({ color: PALETTE.plate, roughness: 0.7 })
+    new MeshStandardMaterial({ color: PALETTE.plate, roughness: 0.55, metalness: 0.15 })
   );
   plate.position.y = -0.07;
   plate.castShadow = true;
@@ -124,7 +124,7 @@ import {
     var col = i % COLS, row = Math.floor(i / COLS);
     group.position.set((col - (COLS - 1) / 2) * PITCH, 0, (row - (ROWS - 1) / 2) * PITCH);
 
-    var mat = new MeshStandardMaterial({ color: PALETTE.weekday, roughness: 0.5, metalness: 0.06 });
+    var mat = new MeshStandardMaterial({ color: PALETTE.weekday, roughness: 0.36, metalness: 0.14 });
     var block = new Mesh(blockGeo, mat);
     block.castShadow = true;
     block.receiveShadow = true;
